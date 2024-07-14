@@ -1,4 +1,6 @@
-const Ticket = () => {
+import PropTypes from "prop-types";
+const Ticket = ({ ticketDetails }) => {
+  const { fromStation, toStation, journeyType, ticketNumber } = ticketDetails;
   return (
     <div className="relative flex h-screen w-screen items-center justify-center">
       <div className="flex flex-col ">
@@ -10,11 +12,11 @@ const Ticket = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
           <g
             id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           ></g>
           <g id="SVGRepo_iconCarrier">
             {" "}
@@ -25,10 +27,12 @@ const Ticket = () => {
           </g>
         </svg>
 
-        <h1 className="mx-auto text-lg font-bold">Ticket Booked Successfully !</h1>
-        <div className="flex flex-col bg-slate-200 my-3   px-11 py-14 shadow-md">
+        <h1 className="mx-auto text-lg font-bold">
+          Ticket Booked Successfully !
+        </h1>
+        <div className="flex flex-col bg-slate-200 my-3  px-11 pt-14 pb-4 shadow-md">
           <div className="flex flex-row text-2xl">
-            <div className="flex pt-4 pr-4">Vasai</div>
+            <div className="flex pt-4 pr-4">{fromStation}</div>
 
             <svg
               className="flex "
@@ -40,10 +44,10 @@ const Ticket = () => {
               xmlns:xlink="http://www.w3.org/1999/xlink"
               fill="#000000"
             >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g
                 id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
+                strokeLinecap="round"
                 stroke-linejoin="round"
               ></g>
               <g id="SVGRepo_iconCarrier">
@@ -52,7 +56,7 @@ const Ticket = () => {
                 <g
                   id="icons"
                   stroke="none"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="none"
                   fill-rule="evenodd"
                 >
@@ -78,15 +82,20 @@ const Ticket = () => {
               </g>
             </svg>
 
-            <div className="flex pt-4  pl-4">Borivali</div>
+            <div className="flex pt-4  pl-4">{toStation}</div>
           </div>
-          <div className="text-md mx-auto pr-4">
-            Return
+          <div className="text-md mx-auto ">{journeyType + " Journey"}</div>
+          <div className="text-md mx-auto pt-16 mt-auto">
+            {"Ticket Number: " + ticketNumber}
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+Ticket.propTypes = {
+  ticketDetails: PropTypes.object.isRequired,
 };
 
 export default Ticket;

@@ -1,29 +1,47 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-const Booking = () => {
+const Booking = ({ handleTicketBooking }) => {
   const navigate = useNavigate();
 
-  const [fromStation, setFromStation] = useState("");
-  const [toStation, setToStation] = useState("");
+  const [stations, setStations] = useState([
+    "Palghar",
+    "Virar",
+    "Nallasopara",
+    "Vasai",
+    "Bhayandar",
+    "Miraroad",
+    "Dahisar",
+    "Borivali",
+  ]);
+
+  const [fromStation, setFromStation] = useState(stations[0]);
+  const [toStation, setToStation] = useState(stations[0]);
   const [journeyType, setJourneyType] = useState("One way");
 
   function fromStationSelection(e) {
-    console.log(e.target.value);
     setFromStation(e.target.value);
+    console.log(e.target.value);
   }
   function toStationSelection(e) {
-    console.log(e.target.value);
     setToStation(e.target.value);
+    console.log(e.target.value);
   }
-
   function journeyTypeSelection(e) {
     setJourneyType(e.target.value);
     console.log(e.target.value);
   }
-  const handleBooking = () => {
+
+  function handleBooking(e) {
+    e.preventDefault();
+    const min = 10000000;
+    const max = 99999999;
+
+    let ticketNumber = Math.floor(Math.random() * (max - min) + min);
+    handleTicketBooking({ fromStation, toStation, journeyType, ticketNumber });
     navigate("/ticket");
-  };
+  }
   return (
     <>
       <div
@@ -31,7 +49,10 @@ const Booking = () => {
      rounded-2xl"
       >
         <div className="flex ">
-          <form className="flex min-w-72 gap-6 mx-auto flex-col">
+          <form
+            onSubmit={handleBooking}
+            className="flex min-w-72 gap-6 mx-auto flex-col"
+          >
             <label className="flex text-md flex-col">
               From
               <select
@@ -39,15 +60,11 @@ const Booking = () => {
                 value={fromStation}
                 onChange={fromStationSelection}
               >
-                <option value="Start station">Start station</option>
-                <option value="Virar">Virar</option>
-                <option value="Nallasopara">Nallasopara</option>
-                <option value="Vasai">Vasai</option>
-                <option value="Naigaon">Naigaon</option>
-                <option value="Bhayandar">Bhayandar</option>
-                <option value="MiraRoad">MiraRoad</option>
-                <option value="Dahisar">Dahisar</option>
-                <option value="Borivali">Borivali</option>
+                {stations.map((station, index) => (
+                  <option key={index} value={station}>
+                    {station}
+                  </option>
+                ))}
               </select>
             </label>
 
@@ -58,14 +75,11 @@ const Booking = () => {
                 value={toStation}
                 onChange={toStationSelection}
               >
-                <option value="End station">End station</option>
-                <option value="Nallasopara">Nallasopara</option>
-                <option value="Vasai">Vasai</option>
-                <option value="Naigaon">Naigaon</option>
-                <option value="Bhayandar">Bhayandar</option>
-                <option value="MiraRoad">MiraRoad</option>
-                <option value="Dahisar">Dahisar</option>
-                <option value="Borivali">Borivali</option>
+                {stations.map((station, index) => (
+                  <option key={index} value={station}>
+                    {station}
+                  </option>
+                ))}
               </select>
             </label>
 
@@ -96,7 +110,6 @@ const Booking = () => {
 
             <button
               type="submit"
-              onClick={handleBooking}
               className="border-black rounded-lg px-3 py-1 mt-12 align-bottom bg-orange-500 text-white hover:bg-orange-600 hover:shadow-lg text-orange-700"
             >
               Book Ticket
@@ -108,4 +121,7 @@ const Booking = () => {
   );
 };
 
+Booking.propTypes = {
+  handleTicketBooking: PropTypes.func.isRequired,
+};
 export default Booking;

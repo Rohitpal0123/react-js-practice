@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Counter() {
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    setCount(count+1)
+  },[])
   function increment() {
     setCount(count +1 );
   }
 
   function decrement() {
-    setCount(count - 19);
+    setCount(count - 1);
   }
   return (
     <>
