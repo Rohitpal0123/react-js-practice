@@ -1,23 +1,29 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { FaPlaneDeparture, FaPlaneArrival, FaTrain } from "react-icons/fa";
 
 const Booking = ({ handleTicketBooking }) => {
   const navigate = useNavigate();
+    const [stations, setStations] = useState([]);
 
-  const [stations, setStations] = useState([
-    "Palghar",
-    "Virar",
-    "Nallasopara",
-    "Vasai",
-    "Bhayandar",
-    "Miraroad",
-    "Dahisar",
-    "Borivali",
-  ]);
+  useEffect(() => {
+    
+      const stations = ["Palghar",
+      "Virar",
+      "Nallasopara",
+      "Vasai",
+      "Bhayandar",
+      "Miraroad",
+      "Dahisar",
+      "Borivali",
+    ];
 
-  const [fromStation, setFromStation] = useState(stations[0]);
-  const [toStation, setToStation] = useState(stations[0]);
+    setStations(stations)
+  },[])
+
+  const [fromStation, setFromStation] = useState("");
+  const [toStation, setToStation] = useState("");
   const [journeyType, setJourneyType] = useState("One way");
 
   function fromStationSelection(e) {
@@ -45,21 +51,26 @@ const Booking = ({ handleTicketBooking }) => {
   return (
     <>
       <div
-        className="bg-gray-100 border-black shadow-xl align-top text-xl flex pt-14 pb-5 px-14
+        className="bg-gray-100 border-black shadow-xl align-top text-xl flex flex-col items-center pt-14 pb-5 px-14 space-y-8
      rounded-2xl"
       >
+        <div className="text-4xl font-bold text-orange-500 flex space-x-3">
+          <FaTrain />
+          <h1>Ticket Booking</h1>
+        </div>
         <div className="flex ">
           <form
             onSubmit={handleBooking}
             className="flex min-w-72 gap-6 mx-auto flex-col"
           >
             <label className="flex text-md flex-col">
-              From
+              <FaPlaneDeparture className="text-orange-500" />
               <select
                 className="border-2 mt-2 py-4 px-1 pr-12 border-orange-500 rounded-md text-sm"
                 value={fromStation}
                 onChange={fromStationSelection}
               >
+                <option value="">Select Station</option>
                 {stations.map((station, index) => (
                   <option key={index} value={station}>
                     {station}
@@ -69,12 +80,13 @@ const Booking = ({ handleTicketBooking }) => {
             </label>
 
             <label className="flex text-md flex-col">
-              To
+              <FaPlaneArrival className="text-orange-500"/>
               <select
                 className="border-2 mt-2 py-4 px-1 pr-12 border-orange-500 rounded-md text-sm"
                 value={toStation}
                 onChange={toStationSelection}
               >
+                <option value="">Select Station</option>
                 {stations.map((station, index) => (
                   <option key={index} value={station}>
                     {station}
